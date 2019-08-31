@@ -30,6 +30,8 @@ public class MainActivityUIController {
     }
 
     public void resume() {
+        resultView = activity.findViewById(R.id.resultView);
+        imageView = activity.findViewById(R.id.capturedImage);
     }
 
     public void updateResultView(final String text) {
@@ -45,5 +47,16 @@ public class MainActivityUIController {
     }
 
     public void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(activity, new String[]{permission}, requestCode);
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{permission}, requestCode);
+            }
+        }
     }
 }
